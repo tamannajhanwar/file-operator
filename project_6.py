@@ -5,7 +5,7 @@ print(end="\n")
 
 class JournalManager:
     def __init__(self):
-        self.f=open('C:\\Users\\Admin\\Desktop\\journal.txt','r+')
+        self.f='C:\\Users\\Admin\\Desktop\\journal.txt'
         while True:
             print('select a option')
             print('1.add a entry')
@@ -17,33 +17,37 @@ class JournalManager:
             
             try:
                 if a==1:
+                    write=input('Enter the entry: ')
                     try:
-                        write=input('Enter the entry')
-                        self.f.write(write)
+                        with open(self.f,'a') as f:
+                             f.write(write + '\n')
                         print('Entry added succesfully!')
                     except:
                         print('entry is not added')
                 
                 elif a==2:
                     try:
-                        print('your journal entries:')
-                        print(self.f.read())
+                        with open(self.f,'r') as f:
+                            print('your journal entries: ')
+                            print(f.read())
                     except:
                         print('file not found')
                 
                 elif a==3:
+                    e=input('enter a keyword to search: ')
                     try:
-                        e=input('enter a keyword to search: ')
-                        if e in self.f:
-                            print(self.f.readline(e))
-                        else:
-                            print('no keyword found')
+                        with open(self.f,'r') as f:
+                            if e in f:
+                                print(f.readline(e))
+                            else:
+                                print('no keyword found')
                     except:
                         print('file not found')
                 elif a==4:
+                    d=input('are you sure you wanna delete all entries?(yes/no): ')
                     try:
-                        d=input('are you sure you wanna delete all entries?(yes/no): ')
                         if d=='yes':
+                            open(self.f,'w').close
                             del(self.f)
                         elif d=='no':
                             continue
